@@ -10,29 +10,32 @@
 #include <EthernetClient.h>
 #include <EthernetServer.h>
 #include <EthernetUdp.h>
-
 #include <ATEMstd.h>
-
 #include <VirtualWire.h>
 
-
+//Atem variables 
 ATEMstd AtemSwitcher;
-
 uint16_t delayBetweenValues = 30;
 long programVal, previewVal;
 long programValorg = -1;
 long previewValorg = -1;
 
+
+//RF variables
 const int transmit_pin = 12;
 uint8_t buf[VW_MAX_MESSAGE_LEN];
 uint8_t buflen = VW_MAX_MESSAGE_LEN;
 
+//Ethernet variables
 IPAddress switcherIp(192, 168, 0, 240);
 EthernetServer server(23);
-String str;
+
 byte mac[] = {
 	0x90, 0xA2, 0xDA, 0x00, 0xE8, 0xE9 };
 IPAddress clientip(192, 168, 0, 175);
+
+//Other variable definitions
+String str;
 boolean serialConnected = false;
 
 void setup() {

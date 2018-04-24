@@ -3,21 +3,33 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
+
+//rf variables and decleration
 const int receive_pin = 2;
 int deviceId = 1;
 String uniqueId;
 
 uint8_t buf[VW_MAX_MESSAGE_LEN];
 uint8_t buflen = VW_MAX_MESSAGE_LEN;
+
+
+//LCD set up
 LiquidCrystal_I2C lcd(0x27, 16, 2); // set the LCD address to 0x27 for a 16 chars and 2 line display
-String currentId;
+
+//LED and pin set up
 int redPin = 11;
 int greenPin = 12;
 int bluePin = 13;
 int upPin = 3;
 int setPin = 4;
+
+//start variable definition
 boolean rfConnect = false;
 boolean idSet = false;
+
+//Atem variable definition
+String currentId;
+
 void setup() {
 	//pin setup
 	pinMode(upPin, INPUT);
