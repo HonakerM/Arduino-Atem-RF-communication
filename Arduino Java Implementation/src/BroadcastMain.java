@@ -1,29 +1,5 @@
-import javax.swing.UIManager.*;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
-import java.net.*;
 import java.io.*;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.net.ServerSocket;
-import javax.swing.filechooser.*;
-import java.rmi.RemoteException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.concurrent.TimeUnit;
-import gnu.io.*;
-import java.awt.Color;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.TooManyListenersException;
+
 
 public class BroadcastMain {
 	
@@ -35,8 +11,8 @@ public class BroadcastMain {
 	public static int baudRate;
 
 	public static void main(String[] args) {
-		BroadcastGraphic = new BroadcastGraphic();
 
+		//read through arguments
 		if(args.length == 0){
 			BroadcastInput = new BroadcastInput();
 		} else if(args.length !=2){
@@ -50,9 +26,13 @@ public class BroadcastMain {
 			}
 		}
 
+		//star broadcast input thread
 		BroadcastInputThread = new Thread(BroadcastInput);
 		BroadcastInputThread.start();
-		
+
+
+		//start graphic
+		BroadcastGraphic = new BroadcastGraphic();
 		
 
 	}

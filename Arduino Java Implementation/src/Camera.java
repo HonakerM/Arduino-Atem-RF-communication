@@ -1,7 +1,10 @@
+//Used to keep track of cameras and there identifying features
+
+
 public class Camera {
-    int camera;
-    int cameraRFID;
-    int status;
+    private int camera;
+    private int cameraRFID;
+    private int status;
     Camera(int cameraNumber, int id){
         camera = cameraNumber;
         cameraRFID = id;

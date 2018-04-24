@@ -1,25 +1,11 @@
-///TODO
-//COMMENT CODE COMPLETELY
 
 
-import javax.swing.UIManager.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
-import javax.swing.*;
-import javax.swing.event.*;
 import javax.swing.table.*;
-import java.net.*;
-import java.io.*;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.net.ServerSocket;
-import javax.swing.filechooser.*;
-import java.rmi.RemoteException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.concurrent.TimeUnit;
 import javax.swing.text.Document;
 
 public class BroadcastGraphic {
