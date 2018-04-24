@@ -379,6 +379,9 @@ public class BroadcastGraphic {
 				mainFrame.pack();
 				mainFrame.setBackground(Color.WHITE);
 				mainFrame.setVisible(true);
+				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+				mainFrame.setLocation(dim.width/2-mainFrame.getSize().width/2, dim.height/2-mainFrame.getSize().height/2);
+				mainFrame.requestFocus();
 
 			}
 		});
