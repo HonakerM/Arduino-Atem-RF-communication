@@ -59,7 +59,7 @@ void setup() {
 	while (!Serial) {
 		; // wait for serial port to connect. Needed for native USB port only
 	}
-	Serial.println("connecte");
+	Serial.println("connect");
 	while (!serialConnected) {
 		if (Serial.available()>0) {
 			str = readSerial();
@@ -84,11 +84,11 @@ void loop() {
 	AtemSwitcher.runLoop(delayBetweenValues); // Short delay
 
 
-											  // Preview Input - Video Source
+	// Preview Input - Video Source
 	previewVal = AtemSwitcher.getPreviewInput();
 	AtemSwitcher.runLoop(delayBetweenValues); // Short delay
 
-											  //update camera RF
+	 //update camera RF
 	if (previewVal != previewValorg) {
 
 		str = previewVal + ":2";
@@ -145,6 +145,8 @@ boolean array_cmp(int *a, int *b) {
 	//ok, if we have not returned yet, they are equal :)
 	return true;
 }
+
+//method to read serial from computer
 String readSerial() {
 	String str = "";
 	int c;
@@ -163,6 +165,7 @@ String readSerial() {
 	return str;
 }
 
+//method to clear Serial buffer
 void serialFlush() {
 	while (Serial.available() > 0) {
 		char t = Serial.read();

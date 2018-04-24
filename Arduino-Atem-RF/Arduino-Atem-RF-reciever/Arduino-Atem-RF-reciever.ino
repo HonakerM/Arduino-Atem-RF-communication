@@ -41,12 +41,12 @@ void setup() {
 	lcd.backlight();  //open the backlight
 	lcd.setCursor(0, 0);
 	lcd.print("welcome");
-	cycleLights();
+	
 
 
+	//set device id
 	lcd.print("");
 	lcd.print("Id:" + deviceId);
-
 	while (!idSet) {
 		if (digitalRead(upPin) == HIGH) {
 			deviceId++;
@@ -62,6 +62,7 @@ void setup() {
 		}
 	}
 
+	cycleLights();
 
 
 
@@ -70,11 +71,12 @@ void setup() {
 }
 
 void loop() {
+	//wait for rf message
 	vw_wait_rx_max(60000);
 	if (vw_have_message()) {
 		vw_get_message(buf, buflen);
 		String device = (char*)buf;
-		if (device.substring(0, 1) == deviceId || device.substring(0, 1) == 0) {
+		if (device.substring(0, 1).equals(String(deviceId)) || device.substring(0, 1) == 0) {
 			if (device.substring(2).toInt()>0) {
 				if (device.substring(2).toInt() == 1) {
 					lcd.setCursor(0, 0); // set the cursor to column 3, line 0
@@ -112,6 +114,8 @@ void loop() {
 		}
 	}
 }
+
+//method to simplify light cycle
 void cycleLights() {
 	digitalWrite(redPin, HIGH);
 	digitalWrite(greenPin, LOW);
