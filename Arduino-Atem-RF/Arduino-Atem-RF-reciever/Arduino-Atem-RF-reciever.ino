@@ -5,7 +5,7 @@
 
 
 //rf variables and decleration
-const int receive_pin = 2;
+const int receive_pin = 2; //purple
 int deviceId = 1;
 String uniqueId;
 
@@ -20,9 +20,13 @@ LiquidCrystal_I2C lcd(0x27, 16, 2); // set the LCD address to 0x27 for a 16 char
 int redPin = 11;
 int greenPin = 12;
 int bluePin = 13;
-int upPin = 3;
-int setPin = 4;
-
+uint8_t upPin = A0;
+uint8_t setPin = A1;
+int powerpinA = 6;
+int powerpinB = 7;
+int powerpinC = 5;
+int powerpinD = 8; //blue
+int groundpinA = 9; //grey
 //start variable definition
 boolean rfConnect = false;
 boolean idSet = false;
@@ -34,6 +38,16 @@ void setup() {
 	//pin setup
 	pinMode(upPin, INPUT);
 	pinMode(setPin, INPUT);
+	pinMode(powerpinA, OUTPUT);
+	pinMode(powerpinB, OUTPUT);
+	pinMode(powerpinC, OUTPUT);
+	pinMode(powerpinD, OUTPUT);
+	pinMode(groundpinA, OUTPUT);
+	digitalWrite(powerpinA, HIGH);
+	digitalWrite(powerpinB, HIGH);
+	digitalWrite(powerpinC, HIGH);
+	digitalWrite(powerpinD, HIGH);
+	digitalWrite(groundpinA, LOW);
 
 	//led set up
 	pinMode(redPin, OUTPUT);
@@ -57,23 +71,33 @@ void setup() {
 
 
 	//set device id
-	lcd.print("");
-	lcd.print("Id:" + deviceId);
+	lcd.clear();
+	lcd.setCursor(0, 0);
+	lcd.print("Id:"+ String(deviceId));
+	long time = millis();
 	while (!idSet) {
-		if (digitalRead(upPin) == HIGH) {
-			deviceId++;
-			if (deviceId>8) {
-				deviceId = 1;
-			}
-			lcd.print("Id:" + deviceId);
-		}
-		else if (digitalRead(upPin) == HIGH) {
-			lcd.print("");
+
+		if (analogRead(upPin) > 1000) {
+			lcd.clear();
+			lcd.setCursor(0, 0);
 			lcd.print("Device ID set");
 			idSet = true;
 		}
+		if (millis() > (time + 1000)) {
+			time = millis();
+			deviceId++;
+			if (deviceId > 8) {
+				deviceId = 1;
+			}
+			lcd.clear();
+			lcd.setCursor(0, 0);
+			lcd.print("Id:" + String(deviceId));
+		}
+		
 	}
-
+	lcd.clear();
+	lcd.setCursor(0, 0);
+	lcd.print("Id set:" + String(deviceId));
 	cycleLights();
 
 
