@@ -5,7 +5,7 @@
 
 
 //rf variables and decleration
-const int receive_pin = 2; //purple
+const int receive_pin = 2; //!purple
 int deviceId = 1;
 String uniqueId;
 
@@ -25,8 +25,8 @@ uint8_t setPin = A1;
 int powerpinA = 6;
 int powerpinB = 7;
 int powerpinC = 5;
-int powerpinD = 8; //blue
-int groundpinA = 9; //grey
+int powerpinD = 8; //! blue
+int groundpinA = 9; //! grey
 //start variable definition
 boolean rfConnect = false;
 boolean idSet = false;
@@ -49,24 +49,32 @@ void setup() {
 	digitalWrite(powerpinD, HIGH);
 	digitalWrite(groundpinA, LOW);
 
+
+	Serial.begin(9600);
 	//led set up
+	//TODO: Implement on HardWare
+	/*
 	pinMode(redPin, OUTPUT);
 	pinMode(greenPin, OUTPUT);
 	pinMode(bluePin, OUTPUT);
 	digitalWrite(redPin, LOW);
 	digitalWrite(greenPin, LOW);
 	digitalWrite(bluePin, HIGH);
-
-	//rf setup//
-	vw_set_rx_pin(receive_pin);
-	vw_setup(2000);
-	vw_rx_start();
+	*/
 
 	//lcd init
 	lcd.init();  //initialize the lcd
 	lcd.backlight();  //open the backlight
 	lcd.setCursor(0, 0);
 	lcd.print("welcome");
+
+
+	//rf setup//
+	vw_set_rx_pin(receive_pin);
+	vw_setup(2000);
+	vw_rx_start();
+
+	
 	
 
 
@@ -107,47 +115,59 @@ void setup() {
 }
 
 void loop() {
-	//wait for rf message
-	vw_wait_rx_max(60000);
+	
 	if (vw_have_message()) {
 		vw_get_message(buf, buflen);
 		String device = (char*)buf;
+		Serial.println(device);
 		if (device.substring(0, 1).equals(String(deviceId)) || device.substring(0, 1) == 0) {
+			lcd.setCursor(0, 0); // set the cursor to column 3, line 0
 			if (device.substring(2).toInt()>0) {
+				
 				if (device.substring(2).toInt() == 1) {
-					lcd.setCursor(0, 0); // set the cursor to column 3, line 0
-					lcd.print("PROGRAM");
-					currentId = "PROGRAM";
-
+					
+					lcd.print("PROGRAM ");
+					//currentId = "PROGRAM";
+					/*
 					digitalWrite(redPin, HIGH);
 					digitalWrite(bluePin, LOW);
 					digitalWrite(greenPin, LOW);
+					*/
 				}
 				else if (device.substring(2).toInt() == 2) {
-					lcd.setCursor(0, 0); // set the cursor to column 3, line 0
-					lcd.print("PREVIEW");
-					currentId = "PREVIEW";
+					
+					lcd.print("PREVIEW ");
+					
+					//currentId = "PREVIEW";
+					/*
 					digitalWrite(redPin, LOW);
 					digitalWrite(bluePin, LOW);
 					digitalWrite(greenPin, HIGH);
+					*/
 				}
 				else if (device.substring(2).toInt() == 3) {
-					lcd.setCursor(0, 0); // set the cursor to column 3, line 0
-					lcd.print("       ");
-					currentId = "";
+					
+					lcd.print("        ");
+					
+					//currentId = "";
+					/*
 					digitalWrite(redPin, LOW);
 					digitalWrite(bluePin, LOW);
 					digitalWrite(greenPin, HIGH);
+					*/
 				}
-			}
-			else if (device.substring(2).toInt() == 0) {
-				lcd.setCursor(0, 0);
-				lcd.clear();
-				lcd.print(currentId);
+			} else if (device.substring(2).toInt() == 0) {
+				
+				
 				lcd.setCursor(0, 1);
 				lcd.print(device.substring(2));
+				lcd.setCursor(0, 0);
 			}
+		} else {
+			lcd.setCursor(0, 0);
+			lcd.print("        ");
 		}
+		
 	}
 }
 

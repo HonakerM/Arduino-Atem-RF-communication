@@ -27,12 +27,12 @@ uint8_t buf[VW_MAX_MESSAGE_LEN];
 uint8_t buflen = VW_MAX_MESSAGE_LEN;
 
 //Ethernet variables
-IPAddress switcherIp(192, 168, 0, 240);
+IPAddress switcherIp(10, 0, 0, 75);
 EthernetServer server(23);
 
 byte mac[] = {
 	0x90, 0xA2, 0xDA, 0x00, 0xE8, 0xE9 };
-IPAddress clientip(192, 168, 0, 175);
+IPAddress clientip(10, 0, 0, 74);
 
 //Other variable definitions
 String str;
@@ -92,29 +92,28 @@ void loop() {
 	AtemSwitcher.runLoop(delayBetweenValues); // Short delay
 
 	 //update camera RF
-	if (previewVal != previewValorg) {
 
-		str = previewVal + ":2";
-		char msg[3];
-		str.toCharArray(msg, 3);
-		vw_send((uint8_t *)msg, 3);
-		vw_wait_tx();
-		if (Serial) {
-			Serial.flush();
-			Serial.println(">V:" + String(previewVal) + ":2");
-		}
+	str = previewVal + ":2";
+	char msg[3];
+	str.toCharArray(msg, 3);
+	vw_send((uint8_t *)msg, 3);
+	vw_wait_tx();
+	if (Serial) {
+		Serial.flush();
+		Serial.println(">V:" + String(previewVal) + ":2");
 	}
-	if (programVal != programValorg) {
-		str = programVal + ":1";
-		char msg[3];
-		str.toCharArray(msg, 3);
-		vw_send((uint8_t *)msg, 3);
-		vw_wait_tx();
-		if (Serial) {
-			Serial.flush();
-			Serial.println(">V:" + String(programVal) + ":2");
-		}
+	
+	
+	str = programVal + ":1";
+	char msg[3];
+	str.toCharArray(msg, 3);
+	vw_send((uint8_t *)msg, 3);
+	vw_wait_tx();
+	if (Serial) {
+		Serial.flush();
+		Serial.println(">V:" + String(programVal) + ":2");
 	}
+	
 
 
 
@@ -132,9 +131,6 @@ void loop() {
 	}
 
 
-	//update values
-	programValorg = programVal;
-	previewValorg = previewVal;
 
 }
 
